@@ -1,0 +1,27 @@
+---
+title: "TTSS in Gammaproteobacteria"
+output: html_document
+---
+
+In this section we will perfome phylogenetic analysis using specific proteins, derived first from literature and then from the blast results we got in previous section. 
+
+  1.- We manually dowload from [UniProt database](http://www.uniprot.org/), sequences that belong to the nine core gene families that share bacteria among seven phylogenetic groups, following [Gazi et al, 2012](https://bmcmicrobiol.biomedcentral.com/articles/10.1186/1471-2180-12-188) and [Tampakaki, 2014](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3973906/). 
+  
+  2.- We manually look for the gene names that were repoted by [Gazi et al, 2012](https://bmcmicrobiol.biomedcentral.com/articles/10.1186/1471-2180-12-188) in the gene annotation that we had from the previous blast. 
+  
+```{r,eval=FALSE}
+  grep 'SctS' Table_Genomes_VCDB | cut -f1 > SctS
+  perl ExtractFromFasta.pl All_proteins.faa list SctS
+```
+  
+  3.-With this information, we got nine multifasta files, each containing reference genes of the seven phylogenetic group and the genes found in our genomes. Each fasta file was aligned and a maximum likelihood phylogeny inferred.
+
+```{r,eval=FALSE}
+  for i in $(ls); do
+      muscle -in $i -out $i.aln
+      fasttree < $i.aln > $i.tree
+  done 
+```
+
+
+Once trees where infered, we can make inferences about grouping of different genes and strains. 
