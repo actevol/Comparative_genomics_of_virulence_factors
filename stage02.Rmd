@@ -1,7 +1,7 @@
 ---
-title: "TTSS in Gammaproteobacteria"
-output: html_document
+TTSS in Gammaproteobacteria
 ---
+
 
 In this section we will perfome phylogenetic analysis using specific proteins, derived first from literature and then from the blast results we got in previous section. 
 
