@@ -1,6 +1,6 @@
 ---
-title: "Evolution of pathogenicity through virulence factors."
-output: html_document
+ "Evolution of pathogenicity through virulence factors."
+
 ---
  First part of the analysis consists on making a BLASTp search.
 
