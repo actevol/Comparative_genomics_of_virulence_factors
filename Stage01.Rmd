@@ -1,0 +1,73 @@
+---
+title: "Evolution of pathogenicity through virulence factors."
+output: html_document
+---
+ First part of the analysis consists on making a BLASTp search.
+
+1.- Download [Protein sequences of full datasets](http://www.mgc.ac.cn/VFs/download.htm)
+
+2.- Create a database using formatdb whithin Blast package. 
+
+
+```{r,eval=FALSE}
+formatdb -i VFDB_setB_pro.fas -p T -t VFDB_setB_pro_DB
+```
+
+3.- We will use this database to perform a BLASTp using our protein genomes (we have a dataset of 59 genomes). 
+
+```{r,eval=FALSE}
+for i in $(ls); do blastp -query $i -db VFDB_setB_pro_DB -outfmt '6 qseqid sseqid qlen slen qstart qend sstart send length evalue bitscore pident ppos qcovs stitle' -max_target_seqs 1 > output.$i.blast done
+```
+
+4.- Now we will filter our results by pident and qcovs. We will keep the hits that had at least 70% pident and 70% of qcovs. 
+
+```{r,eval=FALSE}
+cat *.blast | awk '{ if ($12>=70 && $14>=70) print $0} > Table_Genomes_VFDB
+```
+
+Whith these information we are now able to make some inferences, like the number of hits each strains has.
+
+  Second part of the analysis consist on looking for conserved genes. Insted of using the whole proteome of each strain we will use only the proteins that had a valid hit in the blastp that we performed. 
+  
+1.- We will look for orthologs genes. For this we will use a software call [get_homologues](https://github.com/eead-csic-compbio/get_homologues)
+
+  First we created a multifasta file for earch genome, containing only those genes with the cut-off values previously stated, and we stored the files in a directory named PROTEINS.
+
+```{r,eval=FALSE}
+  cut -f1 Table_Genome_VFDB > Genes_to_extract.list
+  for i in $(ls *.faa); do perl ExtractFromFasta.pl $i list Genes_to_extract.list > $i.fasta; done
+```
+
+ With this information we are now able to use get_homologues. We used two different clustering algorithms, the COG triangles algorithm (-G) and the OMCL algorithm (-M)
+ 
+```{r,eval=FALSE}
+perl get_homologues.pl -i 0 -d PROTEIN -t 0 -G
+perl get_homologues.pl -i 0 -d PROTEIN -t 0 -M
+```
+ 
+ With this output and using the script compare_clusters.pl from get_homologues, we generated the intersection of the clusters and the pangenome matrix for the presence and absence of the analyzed genes.
+```{r,eval=FALSE}
+perl compare_clusters.pl -o VFDB_intersection -m -d PROTEIN_homologues/P44P4S2P179_f0_0taxa_algCOG_e0_,PROTEIN_homologues/P44P4S2P179_f0_0taxa_algOMCL_e0_
+```
+
+ The core and pangenome were calculated with the script parse_pangenome_matrix.pl from get_homologues.
+```{r,eval=FALSE}
+perl parse_pangenome_matrix.pl -m VFDB_intersection/pangenome_matrix_t0.tab -s
+```
+ 
+ The genes that conform the core genome were concatenated and a maximum likelihood phylogenetic reconstruction was perfomed with PhyML and 1000 bootstrap replicates. 
+ 
+2.- The 16S rRNA sequences for each genome were retrived with [RNAmmer](http://www.cbs.dtu.dk/services/RNAmmer/) and a maximum likelihood phylogenetic reconstruction was performed with PhyML and 1000 bootstrap replicates.
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
