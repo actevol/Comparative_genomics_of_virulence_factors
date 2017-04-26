@@ -7,11 +7,9 @@ This guide is divided in five stages:
 
 2.- [TTSS in Gammaproteobacteria.](https://github.com/actevol/Comparative_genomics_of_virulence_factors/blob/master/stage02.Rmd)
 
-3.- Genomic and pathogenic islands.
+3.- [Mobile elements.](https://github.com/actevol/Comparative_genomics_of_virulence_factors/blob/master/Stage03.Rmd)
 
-4.- Antibiotic resistance.
-
-5.- Mobile elements and phages.
+4.- [Antibiotic resistance.](https://github.com/actevol/Comparative_genomics_of_virulence_factors/blob/master/Stage04.Rmd)
 
 
 Each stage shows how to perform some analysis to answer specific questions. 
