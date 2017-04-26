@@ -1,6 +1,6 @@
 ---
-title: "Mobile elements identification"
-output: html_document
+"Mobile elements identification"
+
 ---
 The mobile elements were identified in several steps according to their classes:
 
