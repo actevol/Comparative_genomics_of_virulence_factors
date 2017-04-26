@@ -1,0 +1,70 @@
+---
+title: "Mobile elements identification"
+output: html_document
+---
+The mobile elements were identified in several steps according to their classes:
+
+1.- Genomic and pathogenic islands
+2.- Integrons
+3.- Prophages
+4.- CRISPR
+
+1.- Genomic and pathogenic islands.
+
+Genomic and pathogenic islands were predicted online with the server [IslandViewer 3](http://www.pathogenomics.sfu.ca/islandviewer/upload/)
+
+2.- Integrons
+Integrons were predicted with [Integron Finder](https://github.com/gem-pasteur/Integron_Finder)
+  
+```{r,eval=FALSE}
+bash Predict_integrons.sh
+```
+
+The presence of each type of integron was retrieved for each genome
+```{r,eval=FALSE}
+bash get_data_integron.sh
+```
+
+3.- Prophages
+
+Prophages were predicted with the [PHASTER](http://phaster.ca/) server through their URL API.
+
+Each genome was uploaded as:
+```{r,eval=FALSE}
+for i in $(ls *.fasta); do wget --post-file="$i" "http://phaster.ca/phaster_api" -O $i.phaster; done
+```
+
+The ID for each submission was extracted as follow:
+```{r,eval=FALSE}
+for i in $(ls *.phaster); do
+	ID="$(sed -e 's/,/\t/g' $i | sed 's/\"//g' | sed -e 's/:/\t/g' | cut -f2)"
+	sed -e 's/,/\t/g' $i | sed 's/\"//g' | sed -e 's/:/\t/g' | cut -f2 >> ID_list
+	echo "wget \"http://phaster.ca/phaster_api?acc="$ID\"" -O "$i"_new"
+done
+
+```
+
+After the files were processed, we downloaded the results:
+
+```{r,eval=FALSE}
+input="ID_list"
+while IFS='' read -r ids || [[ -n "$ids" ]]; do
+	wget -O $ids.phaster  "http://phaster.ca/jobs/$ids/summary.txt"
+done < "$input"
+
+```
+
+Each result file was manually renamed in order to match the name of its genome. For each genome, we extract the number or intact prophages
+
+```{r,eval=FALSE}
+for i in $(*.fasta.phaster); do grep "intact prophage" $i >>number_phages; done
+```
+
+
+3.- CRISPR
+
+CRISPR sequences were identified with the [CRISPR Recognition Tool](http://www.room220.com/crt/)
+```{r,eval=FALSE}
+for i in $(ls *.fasta); do java -cp  CRT1.2-CLI.jar crt $i; done
+```
+
