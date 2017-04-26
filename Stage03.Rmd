@@ -1,6 +1,5 @@
 ---
 "Mobile elements identification"
-
 ---
 The mobile elements were identified in several steps according to their classes:
 
