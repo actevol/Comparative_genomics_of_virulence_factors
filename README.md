@@ -5,7 +5,7 @@ This guide is divided in five stages:
 
 1.- [Evolution of pathogenicity through virulence factors.](https://github.com/actevol/Comparative_genomics_of_virulence_factors/blob/master/Stage01.Rmd)
 
-2.- [TTSS in Gammaproteobacteria.](https://github.com/actevol/Comparative_genomics_of_virulence_factors/blob/master/Stage02.Rmd)
+2.- [Secretion systems in Gammaproteobacteria.](https://github.com/actevol/Comparative_genomics_of_virulence_factors/blob/master/Stage02.Rmd)
 
 3.- [Mobile elements.](https://github.com/actevol/Comparative_genomics_of_virulence_factors/blob/master/Stage03.Rmd)
 
