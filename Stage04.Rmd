@@ -1,6 +1,6 @@
 ---
-title: " Antibiotic resistance"
-output: html_document
+" Antibiotic resistance"
+
 ---
 
 First part of the analysis consists on making a BLASTp search with an appropiate database.
