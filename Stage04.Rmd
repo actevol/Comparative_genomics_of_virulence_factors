@@ -1,5 +1,5 @@
 ---
-" Antibiotic resistance"
+"Antibiotic resistance"
 ---
 
 First part of the analysis consists on making a BLASTp search with an appropiate database.
