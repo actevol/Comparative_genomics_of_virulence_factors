@@ -1,0 +1,27 @@
+---
+title: " Antibiotic resistance"
+output: html_document
+---
+
+First part of the analysis consists on making a BLASTp search with an appropiate database.
+
+1.- Download [The Comprehensive Antibiotic Resistance Database V1.1.3](https://card.mcmaster.ca/download/0/broadstreet-v1.1.3.tar.gz)
+
+2.- Create a database using formatdb whithin Blast package. 
+
+```{r,eval=FALSE}
+formatdb -i protein_fasta_protein_homolog_model.fasta -p T -t CARD
+```
+
+3.- We used this database to perform a BLASTp using our protein genomes. 
+
+```{r,eval=FALSE}
+for i in $(ls *.faa); do blastp -query $i -db CARD -outfmt '6 qseqid sseqid qlen slen qstart qend sstart send length evalue bitscore pident ppos qcovs stitle' -max_target_seqs 1 > output.$i.card.blast done
+```
+
+4.- Now we will filter our results by pident and qcovs. We will keep the hits that had at least 70% pident and 70% of qcovs. 
+
+```{r,eval=FALSE}
+cat *.card.blast | awk '{ if ($12>=70 && $14>=70) print $0} > Table_Genomes_CARD
+```
+
