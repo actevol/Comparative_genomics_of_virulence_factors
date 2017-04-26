@@ -3,10 +3,11 @@
 ---
 The mobile elements were identified in several steps according to their classes:
 
-1.- Genomic and pathogenic islands
-2.- Integrons
-3.- Prophages
-4.- CRISPR
+1.- Genomic and pathogenic islands.
+2.- Integrons.
+3.- Prophages.
+4.- CRISPR.
+
 
 1.- Genomic and pathogenic islands.
 
