@@ -65,6 +65,6 @@ for i in $(*.fasta.phaster); do grep "intact prophage" $i >>number_phages; done
 
 CRISPR sequences were identified with the [CRISPR Recognition Tool](http://www.room220.com/crt/)
 ```{r,eval=FALSE}
-for i in $(ls *.fasta); do java -cp  CRT1.2-CLI.jar crt $i; done
+for i in $(ls *.fasta); do java -cp  CRT1.2-CLI.jar crt  -minNR 3 -minRL 16 $i $i_CRISPR; done
 ```
 
